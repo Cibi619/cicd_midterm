@@ -1,18 +1,18 @@
 {
-  "name": "midterm-ci-pure-node",
+  "name": "utils_cicd",
   "version": "1.0.0",
-  "description": "Simple Node.js app for CI pipeline midterm",
+  "description": "Simple Node.js util functions for CI CD",
   "type": "module",
   "main": "app.js",
   "scripts": {
     "start": "node app.js",
-    "test": "jest --coverage"
+    "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js --coverage"
   },
   "devDependencies": {
     "jest": "^29.7.0"
   },
   "jest": {
     "testEnvironment": "node",
-    "collectCoverageFrom": ["*.js"]
+    "transform": {}
   }
 }

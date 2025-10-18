@@ -1,0 +1,95 @@
+name: CI/CD Midterm
+
+on:
+  push:
+    branches:
+      - main
+      - release
+      - production
+  pull_request:
+
+permissions:
+  contents: read
+
+env:
+  IMAGE_NAME: cicd_midterm
+  IMAGE_TAG: node-cibi
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run unit tests
+        run: npm test
+
+  release:
+    needs: build-and-test
+    if: github.ref == 'refs/heads/release'
+    environment: release
+    runs-on: ubuntu-latest
+    env:
+      IMAGE_REPO: ${{ secrets.DOCKERHUB_USERNAME }}/${{ env.IMAGE_NAME }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Show Environment Info
+        run: |
+          echo "Environment: ${{ vars.APP_ENV }}"
+          echo "API Endpoint: ${{ vars.API_ENDPOINT }}"
+
+      - name: Login to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Build & Push Release Image
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          push: true
+          tags: |
+            ${{ env.IMAGE_REPO }}:release-${{ env.IMAGE_TAG }}
+
+  production:
+    needs: build-and-test
+    if: github.ref == 'refs/heads/production'
+    environment: production
+    runs-on: ubuntu-latest
+    env:
+      IMAGE_REPO: ${{ secrets.DOCKERHUB_USERNAME }}/${{ env.IMAGE_NAME }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Show Environment Info
+        run: |
+          echo "Environment: ${{ vars.APP_ENV }}"
+          echo "API Endpoint: ${{ vars.API_ENDPOINT }}"
+
+      - name: Login to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Build & Push Production Image
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          push: true
+          tags: |
+            ${{ env.IMAGE_REPO }}:prod-${{ env.IMAGE_TAG }}

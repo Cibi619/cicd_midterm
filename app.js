@@ -1,4 +1,4 @@
-import { add, subtract, multiply, divide, isPrime } from "./mathUtils.js";
+import { add, subtract, multiply, divide, isPrime } from "./simple_utils.js";
 
 console.log("Add 55 + 348 =", add(55, 348));
 console.log("Subtract 100 - 45 =", subtract(100, 45));

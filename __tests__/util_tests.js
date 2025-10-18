@@ -1,8 +1,8 @@
 import { add, subtract, multiply, divide, isPrime } from "../simple_utils.js";
 
-describe("mathUtils", () => {
+describe("simple_utils", () => {
   test("add returns correct sum", () => {
-    expect(add(2, 3)).toBe(5);
+    expect(add(2, 3)).toBe(6);
   });
 
   test("subtract returns correct difference", () => {
