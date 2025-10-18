@@ -1,0 +1,18 @@
+{
+  "name": "midterm-ci-pure-node",
+  "version": "1.0.0",
+  "description": "Simple Node.js app for CI pipeline midterm",
+  "type": "module",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "test": "jest --coverage"
+  },
+  "devDependencies": {
+    "jest": "^29.7.0"
+  },
+  "jest": {
+    "testEnvironment": "node",
+    "collectCoverageFrom": ["*.js"]
+  }
+}
