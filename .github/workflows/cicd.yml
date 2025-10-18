@@ -40,7 +40,8 @@ jobs:
     environment: release
     runs-on: ubuntu-latest
     env:
-      IMAGE_REPO: ${{ secrets.DOCKERHUB_USERNAME }}/${{ env.IMAGE_NAME }}
+      IMAGE_NAME: cicd_midterm
+      IMAGE_REPO: ${{ secrets.DOCKERHUB_USERNAME }}/cicd_midterm
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -70,7 +71,8 @@ jobs:
     environment: production
     runs-on: ubuntu-latest
     env:
-      IMAGE_REPO: ${{ secrets.DOCKERHUB_USERNAME }}/${{ env.IMAGE_NAME }}
+      IMAGE_NAME: cicd_midterm
+      IMAGE_REPO: ${{ secrets.DOCKERHUB_USERNAME }}/cicd_midterm
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
