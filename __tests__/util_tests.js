@@ -1,3 +1,4 @@
+// this is just the test file for the utils function we created
 import { add, subtract, multiply, divide, isPrime } from "../simple_utils.js";
 
 describe("simple_utils", () => {
